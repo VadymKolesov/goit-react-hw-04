@@ -1,0 +1,16 @@
+.list {
+  margin-top: 110px;
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  justify-content: center;
+  gap: 20px;
+}
+
+.item {
+  border-radius: 10px;
+  margin: 0 auto;
+  width: calc((100% - 40px) / 3);
+  height: 250px;
+  overflow: hidden;
+}

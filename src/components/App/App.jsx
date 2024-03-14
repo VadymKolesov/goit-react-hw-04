@@ -1,15 +1,11 @@
-import css from "./App.module.css";
 import { useEffect, useState } from "react";
 import getPhotosByQuery from "../../api/unsplash-api";
 import SearchBar from "../SearchBar/SearchBar";
 import ImageGallery from "../ImageGallery/ImageGallery";
 import ErrorMessage from "../ErrorMessage/ErrorMessage";
-import LoadMore from "../LoadMore/LoadMore";
+import LoadMoreBtn from "../LoadMoreBtn/LoadMoreBtn";
 import Loader from "../Loader/Loader";
-import Modal from "react-modal";
 import ImageModal from "../ImageModal/ImageModal";
-
-Modal.setAppElement("#root");
 
 export default function App() {
   const [query, setQuery] = useState("");
@@ -69,25 +65,23 @@ export default function App() {
     <>
       <SearchBar onSearch={handleSearch} />
       {isVisible && <ImageGallery data={photos} onOpenModal={openModal} />}
-      {isLoading && <Loader />}
       {isError && <ErrorMessage />}
+      {isLoading && <Loader />}
       {isVisible && !isLoading ? (
-        <LoadMore
+        <LoadMoreBtn
           onLoadMode={() => {
             setPage(page + 1);
           }}
         />
       ) : null}
-      <Modal
-        isOpen={modalIsOpen}
-        onRequestClose={closeModal}
-        className={css.modal}
-        overlayClassName={css.overlay}
-      >
-        {image && (
-          <ImageModal url={image.urls.regular} alt={image.alt_description} />
-        )}
-      </Modal>
+      {image && (
+        <ImageModal
+          isOpen={modalIsOpen}
+          onClose={closeModal}
+          url={image.urls.regular}
+          alt={image.alt_description}
+        />
+      )}
     </>
   );
 }
